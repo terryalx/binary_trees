@@ -1,10 +1,5 @@
 #include "binary_trees.h"
 
-
-/**
- * size_tmax - size function
- *
- */
 size_t _max(size_t a, size_t b);
 
 
