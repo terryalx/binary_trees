@@ -1,53 +1,29 @@
 #include "binary_trees.h"
-#include <stdio.h>
 
 /**
- * binary_alt_height - Function that gets the height of a tree.
- * @tree: The node of the tree.
+ * binary_tree_height -measures the height of a binary tree
+ * @tree: pointer to the root node
  *
- * Return: The height of a tree.
+ * Return: 0 if tree is NULL
  */
-int binary_alt_height(const binary_tree_t *tree)
+
+size_t binary_tree_height(const binary_tree_t *tree)
 {
-	int left_height, right_height;
+	size_t leftheight = 0;
+
+	size_t rightheight = 0;
 
 	if (tree == NULL)
-		return (-1);
-	if (tree->right == NULL && tree->left == NULL)
 		return (0);
 
-	left_height = binary_alt_height(tree->left);
+	if (tree->left)
+		leftheight += 1 + binary_tree_height(tree->left);
 
-	right_height = binary_alt_height(tree->right);
+	if (tree->right)
+		rightheight += 1 + binary_tree_height(tree->right);
 
-	if (right_height >= left_height)
-		return (right_height + 1);
+	if (leftheight > rightheight)
+		return (leftheight);
 	else
-		return (left_height + 1);
-}
-
-
-
-/**
- * binary_tree_balance - Function to find the balance of a tree.
- * @tree: The root node of a tree.
- *
- * Return: An integer
- */
-int binary_tree_balance(const binary_tree_t *tree)
-{
-	int left_height;
-	int right_height;
-	int difference;
-
-	if (tree == NULL)
-		return (0);
-
-	left_height = binary_alt_height(tree->left);
-
-	right_height = binary_alt_height(tree->right);
-
-	difference = (left_height - right_height);
-
-	return (difference);
+		return (rightheight);
 }
