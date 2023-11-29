@@ -1,25 +1,54 @@
 #include "binary_trees.h"
+#include <stdio.h>
+
 
 /**
- * binary_tree_leaves - counts the leaves in a binary tree
- * @tree: pointer to the root node
- * A NULL pointer is not a leaf
- * Return: 0 if tree is NULL
+ * binary_alt_height - Function that gets the height of a tree.
+ * @tree: The node of the tree.
+ *
+ * Return: The height of a tree.
  */
-
-size_t binary_tree_leaves(const binary_tree_t *tree)
+int binary_alt_height(const binary_tree_t *tree)
 {
-	size_t leftleaves, rightleaves;
+	int left_height;
+	int right_height;
+
+	if (tree == NULL)
+		return (-1);
+	if (tree->right == NULL && tree->left == NULL)
+		return (0);
+
+	left_height = binary_alt_height(tree->left);
+
+	right_height = binary_alt_height(tree->right);
+
+	if (right_height >= left_height)
+		return (right_height + 1);
+	else
+		return (left_height + 1);
+}
+
+
+/**
+ * binary_tree_balance - Function to find the balance of a tree.
+ * @tree: The root node of a tree.
+ *
+ * Return: An integer
+ */
+int binary_tree_balance(const binary_tree_t *tree)
+{
+	int left_height;
+	int right_height;
+	int difference;
 
 	if (tree == NULL)
 		return (0);
 
-	if (tree->left == NULL && tree->right == NULL)
-		return (1);
+	left_height = binary_alt_height(tree->left);
 
-	leftleaves = binary_tree_leaves(tree->left);
+	right_height = binary_alt_height(tree->right);
 
-	rightleaves = binary_tree_leaves(tree->right);
+	difference = (left_height - right_height);
 
-	return (leftleaves + rightleaves);
+	return (difference);
 }
